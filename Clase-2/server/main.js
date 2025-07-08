@@ -12,6 +12,7 @@ const users = [
         email: "Perez"
     }
 ]
+
 app.get('/users', (req,res) => {
     res.status(200).json(users)
 })
