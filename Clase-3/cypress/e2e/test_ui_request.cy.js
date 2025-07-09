@@ -21,4 +21,12 @@ describe("Test UI Request de Users", () => {
         })
     })
 
+    it("Verificar que se puede crear un nuevo usuario",() => {
+        cy.visit('/newUser.html') //Visitar la página de creación de usuario
+        cy.xpath('/html/body/form/input[1]').type('Francisco')
+        cy.xpath('/html/body/form/input[2]').type('f67rtr67ar@f.com')
+        cy.xpath('/html/body/form/button').click() //Enviar el formulario
+        cy.xpath('//*[@id="p_error"]').should('contain', 'Usuario creado correctamente') //Verificar que el mensaje de éxito se muestre correctamente
+    })
+
 })
