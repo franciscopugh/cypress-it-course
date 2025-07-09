@@ -1,8 +1,10 @@
+import cors from 'cors';
 import express from 'express';
 
 const app = express();
 const PORT = 4000;
 
+app.use(cors())
 app.use(express.json())
 
 const users = [
