@@ -14,6 +14,10 @@ const users = [
 ]
 
 app.get('/users', (req,res) => {
+    console.log(req.query)
+    if(req.query.query == "crash") {
+        throw new Error("Error forzado para probar el manejo de errores");
+    }
     res.status(200).json(users)
 })
 
@@ -29,6 +33,16 @@ app.get('/users/:id', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
+    const { nombre, email } = req.body;
+    // Validar que los campos requeridos estén presentes
+    if (!nombre || !email) {
+        return res.status(400).json({ message: "Nombre y email son requeridos" });
+    }
+    // Validar que el email sea unico
+    const existingUser = users.find(u => u.email === email);
+    if (existingUser) {
+        return res.status(400).json({ message: "El email ya está en uso" });
+    }
     const newUser = req.body;
     newUser.id = users.length + 1; // Asignar un nuevo ID
     users.push(newUser);
