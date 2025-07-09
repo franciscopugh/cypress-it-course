@@ -35,6 +35,7 @@ app.get('/users/:id', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
+    console.log(req.body);
     const { nombre, email } = req.body;
     // Validar que los campos requeridos estén presentes
     if (!nombre || !email) {
