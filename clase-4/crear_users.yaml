@@ -1,0 +1,27 @@
+config:
+  target: "http://localhost:4000"
+  phases:
+    - duration: 60 #Duracion de la fase en segundos
+      arrivalRate: 1 #Usuarios por segundo
+payload:
+  path: "cypress/fixtures/users-faker.json" #Ruta del archivo JSON con los datos de prueba
+  
+  fields:
+    - nombre
+    - mail
+  headers:
+    Content-Type: "application/json"
+scenarios:
+  - flow:
+      - post:
+          url: "/users"
+          body:
+            nombre: "{{ nombre }}"
+            mail: "{{ mail }}"
+          capture:
+            - id: "id"
+              json: "$.id"
+          think-time: 1 #Tiempo de espera entre peticiones
+      - get:
+          url: "/{{ id }}"
+          think-time: 1 #Tiempo de espera entre peticiones
