@@ -24,9 +24,30 @@ describe("Test UI Request de Users", () => {
     it("Verificar que se puede crear un nuevo usuario",() => {
         cy.visit('/newUser.html') //Visitar la página de creación de usuario
         cy.xpath('/html/body/form/input[1]').type('Francisco')
-        cy.xpath('/html/body/form/input[2]').type('f67rtr67ar@f.com')
+        cy.xpath('/html/body/form/input[2]').type('ra3fafafa@f.com')
         cy.xpath('/html/body/form/button').click() //Enviar el formulario
         cy.xpath('//*[@id="p_error"]').should('contain', 'Usuario creado correctamente') //Verificar que el mensaje de éxito se muestre correctamente
     })
+
+    it("Consultar un usuario dado su ID", () => {
+        cy.visit('/getUser.html?id=3') //Visitar la página de consulta de usuario
+        cy.xpath('//*[@id="user"]').should('exist') //Verificar que el contenedor del usuario exista
+    })
+
+     it("Verificar que se pueda editar un usuario",() => {
+        cy.visit('/editUser.html?id=1') //Visitar la página de creación de usuario
+        cy.xpath('/html/body/form/input[1]').clear().type('Federico')
+        cy.xpath('/html/body/form/input[2]').clear().type('pepe@pe.com')
+        cy.xpath('/html/body/form/button').click() //Enviar el formulario
+        cy.xpath('//*[@id="p_error"]').should('contain', 'Usuario editado correctamente') //Verificar que el mensaje de éxito se muestre correctamente
+    })
+
+    it("Eliminar un usuario dado su ID", () => {
+        cy.visit('/deleteUser.html') //Visitar la página de eliminación de usuario
+        cy.xpath('//*[@id="userId"]').type('2') //Ingresar el ID del usuario a eliminar
+        cy.xpath('//form/button').click() //Enviar el formulario
+        cy.xpath('//*[@id="p_error"]').should('contain', 'Usuario eliminado correctamente') //Verificar que el mensaje de éxito se muestre correctamente
+    })
+
 
 })

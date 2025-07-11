@@ -22,7 +22,7 @@ formEditUser.addEventListener('submit', (e) => {
     e.preventDefault() //Prevenir el comportamiento por defecto del formulario (recargar la página)
     const formData = new FormData(formEditUser) //Obtener los datos del formulario
     const userData = Object.fromEntries(formData) //Convertir los datos del formulario a un objeto
-
+    
     console.log(userData) // {nombre: "Pepe", email: "Perez"}
 
     fetch(`http://localhost:4000/users/${UserId}`, {

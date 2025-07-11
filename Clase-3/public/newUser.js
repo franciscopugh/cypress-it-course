@@ -20,6 +20,8 @@ formNewUser.addEventListener('submit', (e) => {
         if(data.message == "Nombre y email son requeridos" || data.message == "El email ya está en uso") {
             parrafoError.innerText = `Error al crear usuario: ${data.message}` //Mostrar el mensaje de error
             parrafoError.style.color = "red" //Cambiar el color del mensaje a rojo
+
+        formNewUser.reset() //Limpiar el formulario
             return //Salir de la función si hay un error
         }
         
