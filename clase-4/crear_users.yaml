@@ -5,23 +5,27 @@ config:
       arrivalRate: 1 #Usuarios por segundo
 payload:
   path: "cypress/fixtures/users-faker.json" #Ruta del archivo JSON con los datos de prueba
-  
+  format: "json" #Formato del archivo JSON
+  contentType: "application/json" #Tipo de contenido del archivo JSON
   fields:
+    - id
     - nombre
-    - mail
+    - email
   headers:
     Content-Type: "application/json"
+plugins:
+  - name: "faker"
+    options:
+      locale: "es" #Configuración regional para Faker
+      
 scenarios:
-  - flow:
+  - name: "Crear usuarios"
+    flow:
       - post:
           url: "/users"
-          body:
+          json:
+            id: "{{ id }}"
             nombre: "{{ nombre }}"
-            mail: "{{ mail }}"
-          capture:
-            - id: "id"
-              json: "$.id"
-          think-time: 1 #Tiempo de espera entre peticiones
-      - get:
-          url: "/{{ id }}"
-          think-time: 1 #Tiempo de espera entre peticiones
+            email: "{{ email }}"
+          expect:
+            statusCode: 201 #Código de estado esperado para la creación exitosa
