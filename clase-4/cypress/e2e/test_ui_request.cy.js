@@ -35,21 +35,25 @@ describe("Test UI Request de Users", () => {
     })
 
     it("Consultar un usuario dado su ID", () => {
-        cy.visit(`/getUser.html?id=${usuariosAPI.length}`) //Visitar la página de consulta de usuario
+        cy.visit(`/getUser.html?id=${usuariosAPI.length +1}`) //Visitar la página de consulta de usuario
         cy.xpath('//*[@id="user"]').should('exist') //Verificar que el contenedor del usuario exista
     })
 
      it("Verificar que se pueda editar un usuario",() => {
-        cy.visit(`/editUser.html?id=${usuariosAPI.length}`) //Visitar la página de creación de usuario
-        cy.xpath('/html/body/form/input[1]').clear().type('Federico')
-        cy.xpath('/html/body/form/input[2]').clear().type('pepe@pe.com')
+        cy.visit(`/editUser.html?id=${usuariosAPI.length +1}`) //Visitar la página de creación de usuario
+        cy.fixture('usuarioBase').then((usuarioBase) => {
+            const last_name = faker.person.lastName()
+            cy.xpath('/html/body/form/input[1]').clear().type(`${usuarioBase.nombre} ${last_name}`)
+            cy.xpath('/html/body/form/input[2]').clear().type(`${Date.now()}_${faker.internet.email({firstName: usuarioBase.nombre, lastName: last_name, provider: "gmail.com"})}`) //Ingresar un email aleatorio
+        })
+        
         cy.xpath('/html/body/form/button').click() //Enviar el formulario
         cy.xpath('//*[@id="p_error"]').should('contain', 'Usuario editado correctamente') //Verificar que el mensaje de éxito se muestre correctamente
     })
 
     it("Eliminar un usuario dado su ID", () => {
         cy.visit('/deleteUser.html') //Visitar la página de eliminación de usuario
-        cy.xpath('//*[@id="userId"]').type(usuariosAPI.length) //Ingresar el ID del usuario a eliminar
+        cy.xpath('//*[@id="userId"]').type(usuariosAPI.length + 1) //Ingresar el ID del usuario a eliminar
         cy.xpath('//form/button').click() //Enviar el formulario
         cy.xpath('//*[@id="p_error"]').should('contain', 'Usuario eliminado correctamente') //Verificar que el mensaje de éxito se muestre correctamente
     })
