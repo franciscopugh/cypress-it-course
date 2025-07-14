@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cypress/react": "^9.0.1",
     "@supabase/supabase-js": "^2.51.0",
     "cypress": "^14.5.1",
+    "cypress-xpath": "^2.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

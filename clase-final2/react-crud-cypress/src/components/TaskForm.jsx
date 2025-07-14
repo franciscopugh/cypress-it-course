@@ -5,6 +5,7 @@ export default function TaskForm({ onAdd }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    //Retorno el titulo si no esta vacio
     if (!title.trim()) return
     onAdd(title)
     setTitle('')
