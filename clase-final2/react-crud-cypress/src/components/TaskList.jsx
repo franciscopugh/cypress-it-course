@@ -1,4 +1,4 @@
-export default function TaskList({ tasks, onDelete }) {
+export default function TaskList({ tasks, onDelete, onEdit}) {
   return (
     <ul className="space-y-2">
       {tasks.map((task) => (
@@ -9,6 +9,12 @@ export default function TaskList({ tasks, onDelete }) {
             className="text-sm bg-red-500 text-white px-2 py-1 rounded delete"
           >
             Eliminar
+          </button>
+          <button
+            onClick={() => onEdit(task.id)}
+            className="text-sm bg-yellow-500 text-white px-2 py-1 rounded delete"
+          >
+            Editar
           </button>
         </li>
       ))}

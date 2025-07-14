@@ -1,13 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function TaskForm({ onAdd }) {
+export default function TaskForm({ onSubmit, taskToEdit }) {
   const [title, setTitle] = useState('')
+
+  //Si existe una tarea para editar, actualizo el estado del titulo
+  useEffect(() => {
+    
+    setTitle(taskToEdit?.title || ' ')
+    
+  },[taskToEdit])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     //Retorno el titulo si no esta vacio
     if (!title.trim()) return
-    onAdd(title)
+    onSubmit(title)
     setTitle('')
   }
 
@@ -16,11 +23,12 @@ export default function TaskForm({ onAdd }) {
       <input
         type="text"
         placeholder="Nueva tarea"
-        value={title}
+        
+        value={taskToEdit ? taskToEdit.title : ' '}
         onChange={(e) => setTitle(e.target.value)}
         className="border p-2 rounded w-full"
       />
-      <button className="bg-blue-500 text-white px-4 py-2 rounded">Agregar</button>
+      <button  type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">{taskToEdit ? 'Actualizar' :  'Agregar'}</button>
     </form>
   )
 }
