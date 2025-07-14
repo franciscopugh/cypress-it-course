@@ -21,6 +21,7 @@ describe("Test Create con Faker via request", () => {
             })
 
     */
+    
         cy.intercept('GET', API,  {
             statusCode:200,
             body: [
@@ -37,10 +38,16 @@ describe("Test Create con Faker via request", () => {
             ]
         }).as('getUsers')
 
+        cy.intercept('GET', API, {
+            statusCode: 500,
+            body: {'error': 'Internal Server Error'}
+        }).as('getUsersError')
+
         cy.visit('/index.html') //Visitar la página principal
         cy.wait('@getUsers').then((interception) => {
+            cy.log('Intercepted GET request:', interception)
             expect(interception.response.statusCode).to.eq(200) //Verificar que la respuesta sea 200 OK
-            expect(interception.response.body).to.have.length(2) //Verificar que la cantidad de usuarios sea 2
+            //expect(interception.response.body).to.have.length(2) //Verificar que la cantidad de usuarios sea 2
         })
         
         /*

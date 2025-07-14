@@ -1,0 +1,15 @@
+<div class="p-4 max-w-xl mx-auto">
+  <h1 class="text-2xl font-bold mb-4">Mis Tareas</h1>
+  <input [(ngModel)]="newTask" placeholder="Nueva tarea" class="border p-2 w-full mb-2" />
+  <button (click)="addTask()" class="bg-blue-500 text-white p-2 rounded w-full">Agregar</button>
+
+  <ul class="mt-4">
+    <li *ngFor="let task of tasks" class="flex justify-between items-center border-b py-2">
+      <span [class.line-through]="task.completed">{{ task.title }}</span>
+      <div>
+        <button (click)="toggleCompleted(task)" class="mr-2 text-green-500">✔️</button>
+        <button (click)="deleteTask(task.id)" class="text-red-500">🗑️</button>
+      </div>
+    </li>
+  </ul>
+</div>

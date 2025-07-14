@@ -4,7 +4,10 @@ fetch('http://localhost:4000/users')
 .then(data=> {
     const container = document.getElementById('users-container');
     //Por cada elemento en el array de datos, crear un nuevo elemento HTML y agregarlo al contenedor
-    data.forEach(element => {
+    console.log(data);
+    
+    if(data.length != 0) {
+ data.forEach(element => {
         const userElement = document.createElement('div');
         userElement.id = `user-${element.id}`;
         userElement.className = 'users-card';
@@ -14,4 +17,8 @@ fetch('http://localhost:4000/users')
         `;
         container.appendChild(userElement);
     });
+    } else {
+        console.log("Error")
+    }
+   
 })
